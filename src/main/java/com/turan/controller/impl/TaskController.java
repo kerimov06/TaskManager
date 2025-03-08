@@ -4,6 +4,7 @@ import com.turan.controller.ITaskController;
 import com.turan.dto.DtoTask;
 import com.turan.entity.Task;
 import com.turan.service.ITaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -18,11 +19,9 @@ public class TaskController implements ITaskController {
     @Autowired
     private ITaskService taskService;
 
-
-
     @GetMapping("/taskFindByTitle/{title}")
     @Override
-    public DtoTask findByTitle(@PathVariable(name = "title") String title){
+    public DtoTask findByTitle(@PathVariable(name = "title")String title){
         return taskService.findByTitle(title);
     }
     @PutMapping("/taskUpdate/{id}")
@@ -43,7 +42,7 @@ public class TaskController implements ITaskController {
 
     @PostMapping("/new-task")
     @Override
-    public DtoTask createTask(@RequestBody DtoTask dtoTask){
+    public DtoTask createTask(@RequestBody @Valid DtoTask dtoTask){
         return taskService.createTask(dtoTask);
     }
 
