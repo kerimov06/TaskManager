@@ -12,4 +12,5 @@ public interface ITaskController {
     public DtoTask getAllTaskById(Integer id);
     public void deleteTask(Integer id);
     public DtoTask updateAllTask(Integer id , DtoTask updateTask);
+    public DtoTask findByTitle(String title);
 }

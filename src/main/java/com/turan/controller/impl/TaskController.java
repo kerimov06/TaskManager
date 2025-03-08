@@ -19,21 +19,22 @@ public class TaskController implements ITaskController {
     private ITaskService taskService;
 
 
+
+    @GetMapping("/taskFindByTitle/{title}")
+    @Override
+    public DtoTask findByTitle(@PathVariable(name = "title") String title){
+        return taskService.findByTitle(title);
+    }
     @PutMapping("/taskUpdate/{id}")
     @Override
     public DtoTask updateAllTask(@PathVariable (name = "id") Integer id , @RequestBody DtoTask updateTask){
         return taskService.updateAllTask(id,updateTask);
     }
-
-
-
     @DeleteMapping("/taskDeletById/{id}")
     @Override
     public void deleteTask(@PathVariable (name = "id") Integer id){
         taskService.deleteTask(id);
     }
-
-
     @GetMapping("/taskById/{id}")
     @Override
     public DtoTask getAllTaskById(@PathVariable(name = "id") Integer id){

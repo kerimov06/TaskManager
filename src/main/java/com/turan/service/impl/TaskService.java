@@ -23,6 +23,18 @@ public class TaskService implements ITaskService {
 
 
     @Override
+    public DtoTask findByTitle(String title){
+         DtoTask dtoTask = new DtoTask();
+          Task dbTask = taskRepository.findByTitle(title);
+           if(dbTask!=null){
+               BeanUtils.copyProperties(dbTask,dtoTask);
+               return dtoTask;
+           }
+
+          return null;
+    }
+
+    @Override
     public DtoTask updateAllTask(Integer id , DtoTask updateTask){
         DtoTask dto = new DtoTask();
         Optional<Task>  task = taskRepository.findById(id);
@@ -39,8 +51,6 @@ public class TaskService implements ITaskService {
             return dto;
         }
         return null;
-
-
     }
 
 
@@ -67,10 +77,7 @@ public class TaskService implements ITaskService {
             BeanUtils.copyProperties(dbTask,dto);
             return dto;
         }
-
         return null;
-
-
     }
 
 
@@ -96,13 +103,12 @@ public class TaskService implements ITaskService {
     @Override
     public List<DtoTask> getAllTask() {
         List<DtoTask> dtoTasks = new ArrayList<>();
-        List<Task> taskList =  taskRepository.findAll();
+        List<Task> taskList =  taskRepository.getAllTasks();
 
          for (Task task : taskList){
              DtoTask dto = new DtoTask();
               BeanUtils.copyProperties(task,dto);
               dtoTasks.add(dto);
-
          }
          return dtoTasks;
     }

@@ -17,4 +17,6 @@ public interface ITaskService {
 
    public DtoTask updateAllTask(Integer id , DtoTask updateTask);
 
+   public DtoTask findByTitle(String title);
+
 }
