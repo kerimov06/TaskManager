@@ -11,16 +11,17 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+/*
+@Service*/
+/*ublic class TaskService implements ITaskService {*/
 
-@Service
-public class TaskService implements ITaskService {
-
-    @Autowired
+  /*  @Autowired
     private TaskRepository taskRepository;
+*/
 
 
 
-
+/*
 
     @Override
     public DtoTask findByTitle(String title){
@@ -115,4 +116,5 @@ public class TaskService implements ITaskService {
 
 }
 
+*/
 

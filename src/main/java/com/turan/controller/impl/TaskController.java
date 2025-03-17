@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
 @RestController
-@RequestMapping("/rest/api/task")
+@RequestMapping("/rest/api/tasks")
 public class TaskController implements ITaskController {
 
     @Autowired
@@ -52,3 +53,4 @@ public class TaskController implements ITaskController {
         return taskService.getAllTask();
     }
 }
+*/

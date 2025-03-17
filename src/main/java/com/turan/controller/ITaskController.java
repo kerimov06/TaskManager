@@ -1,3 +1,4 @@
+/*
 package com.turan.controller;
 
 import com.turan.dto.DtoTask;
@@ -14,3 +15,4 @@ public interface ITaskController {
     public DtoTask updateAllTask(Integer id , DtoTask updateTask);
     public DtoTask findByTitle(String title);
 }
+*/

@@ -5,6 +5,7 @@ import com.turan.entity.Task;
 
 import java.util.List;
 
+/*
 public interface ITaskService {
 
    public DtoTask createTask(DtoTask dtoTask) ;
@@ -20,3 +21,4 @@ public interface ITaskService {
    public DtoTask findByTitle(String title);
 
 }
+*/
