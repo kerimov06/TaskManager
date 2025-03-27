@@ -15,6 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DtoTask {
 
+     private Long id;
+
     @NotEmpty(message = "Title never been empty or null")
     private String title;
     @Size(min = 10 , max = 100 , message = "Please write between area of min and max")

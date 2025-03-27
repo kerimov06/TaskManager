@@ -17,7 +17,6 @@ public class User {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -26,6 +25,6 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 }

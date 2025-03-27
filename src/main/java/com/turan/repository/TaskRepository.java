@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task,Integer> {
+public interface TaskRepository extends JpaRepository<Task,Long> {
     @Query(value = "SELECT*FROM task.task WHERE title = :title" , nativeQuery = true)
     Task findByTitle(@Param("title")String title);
     @Query(value = "SELECT*FROM task.task " , nativeQuery = true)
