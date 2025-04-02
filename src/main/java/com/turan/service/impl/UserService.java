@@ -38,7 +38,7 @@ public class UserService implements IUserService {
 
 
         if (optional.isEmpty()) {
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST,id.toString()));
         }
 
         User dbUser = optional.get();
