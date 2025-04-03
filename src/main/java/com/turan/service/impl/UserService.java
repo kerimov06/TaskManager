@@ -10,6 +10,7 @@ import com.turan.exception.ErrorMessage;
 import com.turan.exception.MessageType;
 import com.turan.repository.UserRepository;
 import com.turan.service.IUserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -113,7 +114,7 @@ public class UserService implements IUserService {
 
 
 
-
+    @Transactional
     @Override
     public DtoUser getUserTaskByID(Long id) {
 

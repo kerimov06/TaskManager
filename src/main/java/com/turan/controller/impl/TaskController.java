@@ -1,9 +1,8 @@
 package com.turan.controller.impl;
 
-import com.turan.controller.ITaskController;
+
 import com.turan.dto.DtoTask;
 import com.turan.entity.Task;
-import com.turan.service.ITaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

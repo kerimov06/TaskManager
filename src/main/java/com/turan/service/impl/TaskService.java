@@ -3,7 +3,6 @@ package com.turan.service.impl;
 import com.turan.dto.DtoTask;
 import com.turan.entity.Task;
 import com.turan.repository.TaskRepository;
-import com.turan.service.ITaskService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
