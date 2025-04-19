@@ -24,15 +24,15 @@ public class ResponsEntity<T> {
               responsEntity.setData(data);
 
               return responsEntity;
-     }
+         }
 
-     public static  <T> ResponsEntity<T> error(String errorMessage){
-         ResponsEntity<T> responsEntity = new ResponsEntity<>();
-           responsEntity.setErrorMessage(errorMessage);
-           responsEntity.setResult(false);
-           responsEntity.setData(null);
+         public static  <T> ResponsEntity<T> error(String errorMessage){
+             ResponsEntity<T> responsEntity = new ResponsEntity<>();
+               responsEntity.setErrorMessage(errorMessage);
+               responsEntity.setResult(false);
+               responsEntity.setData(null);
 
-           return  responsEntity;
-     }
+               return  responsEntity;
+         }
 
-}
+    }

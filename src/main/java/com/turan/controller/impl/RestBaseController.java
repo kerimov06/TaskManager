@@ -4,7 +4,7 @@ import com.turan.entity.ResponsEntity;
 
 public class RestBaseController {
 
-    public <T> ResponsEntity<T>  ok(T data){
+    public <T>ResponsEntity<T>  ok(T data){
          return  ResponsEntity.ok(data);
     }
 
