@@ -1,5 +1,6 @@
 package com.turan.config;
 
+import com.turan.jwt.AuthEntryPoint;
 import com.turan.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +27,17 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Autowired
+    private AuthEntryPoint authEntryPoint;
+
+
+
+     public static final String[] SWAGGER_PATHS = {
+          "/swagger-ui/**",
+             "/v3/api-docs/**",
+             "swagger-ui.html"
+     };
+
 
      @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,8 +46,10 @@ public class SecurityConfig {
                           request
                                   .requestMatchers(AUTHENTICATE,REGISTER)
                                   .permitAll()
+                                  .requestMatchers(SWAGGER_PATHS).permitAll()
                                   .anyRequest()
                                   .authenticated())
+                  .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
                   .sessionManagement(session->
                           session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                   .authenticationProvider(authenticationProvider)

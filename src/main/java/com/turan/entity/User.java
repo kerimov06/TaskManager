@@ -26,5 +26,6 @@ public class User {
     private String surname;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     private List<Task> tasks = new ArrayList<>();
 }

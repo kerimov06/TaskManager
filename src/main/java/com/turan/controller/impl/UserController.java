@@ -21,6 +21,12 @@ public class UserController extends RestBaseController implements IUserControlle
         return ok(userService.updateUserTask(id,dtoUserIU));
     }
 
+    @DeleteMapping("/deleteTask/{id}")
+    @Override
+    public void deleteUserById(@PathVariable(name = "id") Long id) {
+         userService.deleteUserById(id);
+    }
+
 
     @PostMapping("/saveTasks")
     @Override

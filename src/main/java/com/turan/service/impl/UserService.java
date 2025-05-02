@@ -72,8 +72,12 @@ public class UserService implements IUserService {
 
     }
 
+    @Transactional
+    @Override
+    public void deleteUserById(Long id) {
 
-
+         userRepository.findById(id).ifPresent(userRepository::delete);
+    }
 
 
     @Override
@@ -106,12 +110,9 @@ public class UserService implements IUserService {
                   dtoUser.setTasks(dtoTasks);
 
 
-        return dtoUser;
-
+              return dtoUser;
 
     }
-
-
 
 
     @Transactional
@@ -138,7 +139,7 @@ public class UserService implements IUserService {
             }
         }
 
-        return dtoUser;
+             return dtoUser;
     }
 
     }

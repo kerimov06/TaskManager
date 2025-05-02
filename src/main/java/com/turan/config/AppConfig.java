@@ -28,7 +28,7 @@ public class AppConfig {
              @Override
              public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-                   Optional<Human> optional =  userRepository.findByUserName(username);
+                   Optional<Human> optional =  userRepository.findByUsername(username);
                      if (optional.isPresent()){
                           return optional.get();
                      }

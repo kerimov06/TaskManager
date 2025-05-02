@@ -9,4 +9,5 @@ public interface IUserController {
     public ResponsEntity<DtoUser> getUserTaskByID(Long id);
     public DtoUser saveUserTask(DtoUserIU dtoUserIU);
     public ResponsEntity<DtoUser> updateUserTask(Long id, DtoUserIU dtoUserIU);
+    public void deleteUserById(Long id);
 }

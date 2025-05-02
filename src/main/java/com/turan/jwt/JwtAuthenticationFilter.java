@@ -59,11 +59,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              }
 
          }catch (ExpiredJwtException e){
-             System.out.printf("Tokeninizin vaxti dolmusdur" + e.getMessage());
+             System.out.println("Tokeninizin vaxti dolmusdur" + e.getMessage());
 
          }
          catch (Exception e){
-             System.out.printf("Umumi bir xeta oldu " + e.getMessage());
+             System.out.println("Umumi bir xeta oldu " + e.getMessage());
          }
          filterChain.doFilter(request,response);
     }

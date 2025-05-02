@@ -14,5 +14,7 @@ public interface IUserService {
 
     public DtoUser updateUserTask(Long id , DtoUserIU dtoUserIU);
 
+    public void deleteUserById(Long id);
+
 
 }
