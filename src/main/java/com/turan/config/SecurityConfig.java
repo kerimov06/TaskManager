@@ -33,9 +33,9 @@ public class SecurityConfig {
 
 
      public static final String[] SWAGGER_PATHS = {
-          "/swagger-ui/**",
              "/v3/api-docs/**",
-             "swagger-ui.html"
+             "/swagger-ui/**",
+             "/swagger-ui.html"
      };
 
 
