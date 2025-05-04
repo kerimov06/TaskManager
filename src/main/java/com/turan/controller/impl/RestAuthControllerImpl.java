@@ -26,7 +26,7 @@ public class RestAuthControllerImpl implements IRestAuthController {
 
     @PostMapping("/authenticate")
     @Override
-    public AuthResponse authenticate(@RequestBody  AuthRequest request) {
+    public AuthResponse authenticate(@RequestBody AuthRequest request) {
         return authService.authenticate(request);
     }
 }
