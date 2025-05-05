@@ -2,27 +2,27 @@ package com.turan.service.impl;
 
 import com.turan.dto.DtoHuman;
 import com.turan.entity.Human;
-import com.turan.entity.RefreshToken;
 import com.turan.jwt.AuthRequest;
 import com.turan.jwt.AuthResponse;
 import com.turan.jwt.JwtService;
 import com.turan.repository.HumanRepository;
-import com.turan.repository.RefreshTokenRepository;
 import com.turan.service.IAuthService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements IAuthService {
+    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
+
 
     @Autowired
     private HumanRepository humanRepository;
@@ -36,12 +36,10 @@ public class AuthServiceImpl implements IAuthService {
     @Autowired
     private JwtService jwtService;
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
 
 
 
-     private RefreshToken createRefreshToken(Human human){
+    /* private RefreshToken createRefreshToken(Human human){
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setRefreshToken(UUID.randomUUID().toString());
         refreshToken.setExpireDate(new Date(System.currentTimeMillis()+1000*60*60*4));
@@ -50,7 +48,7 @@ public class AuthServiceImpl implements IAuthService {
         return refreshToken;
 
     }
-
+*/
 
     @Override
     public DtoHuman register(AuthRequest request) {
@@ -67,27 +65,36 @@ public class AuthServiceImpl implements IAuthService {
         return dto;
     }
 
+
+
     @Override
     public AuthResponse authenticate(AuthRequest request) {
+
         try {
-            UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+            UsernamePasswordAuthenticationToken  authenticationToken =
+                    new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword());
+            authenticationProvider.authenticate(authenticationToken);
 
-            authenticationProvider.authenticate(auth);
+                   Optional<Human> optionalHuman = humanRepository.findByUsername(request.getUsername());
 
-            Human human = humanRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
 
-            String accessToken = jwtService.generateToken(human);
+                        Human human = optionalHuman.get();
+            boolean isPasswordMatch = passwordEncoder.matches(request.getPassword(), human.getPassword());
+            if (!isPasswordMatch) {
+                throw new RuntimeException("Username or Password is incorrect");
+            }
 
-            RefreshToken refreshToken = createRefreshToken(human);
-            refreshTokenRepository.save(refreshToken);
 
-            return new AuthResponse(accessToken, refreshToken.getRefreshToken());
+            String token =  jwtService.generateToken(human);
+
+
+            return new AuthResponse(token);
 
         } catch (Exception e) {
-            throw new RuntimeException("Username or Password is wrong");
+            throw new RuntimeException("Username or Password is wrong: " + e.getMessage());
         }
+
     }
+
 
 }

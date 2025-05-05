@@ -1,12 +1,10 @@
 package com.turan.config;
 
-import com.turan.jwt.AuthEntryPoint;
 import com.turan.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,8 +25,6 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private AuthEntryPoint authEntryPoint;
 
 
 
@@ -49,7 +45,6 @@ public class SecurityConfig {
                                   .requestMatchers(SWAGGER_PATHS).permitAll()
                                   .anyRequest()
                                   .authenticated())
-                  .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
                   .sessionManagement(session->
                           session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                   .authenticationProvider(authenticationProvider)

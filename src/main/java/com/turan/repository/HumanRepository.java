@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface HumanRepository extends JpaRepository<Human,Long> {
-    @Query(value = "from Human where username = :username")
     Optional<Human> findByUsername(String username);
 }
