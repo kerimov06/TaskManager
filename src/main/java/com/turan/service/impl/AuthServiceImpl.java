@@ -2,13 +2,16 @@ package com.turan.service.impl;
 
 import com.turan.dto.DtoHuman;
 import com.turan.entity.Human;
+import com.turan.entity.RefreshToken;
 import com.turan.jwt.AuthRequest;
 import com.turan.jwt.AuthResponse;
 import com.turan.jwt.JwtService;
 import com.turan.repository.HumanRepository;
+import com.turan.repository.RefreshTokenRepository;
 import com.turan.service.IAuthService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements IAuthService {
@@ -32,6 +37,9 @@ public class AuthServiceImpl implements IAuthService {
 
     @Autowired
     private AuthenticationProvider authenticationProvider;
+
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
     private JwtService jwtService;
@@ -49,6 +57,15 @@ public class AuthServiceImpl implements IAuthService {
 
     }
 */
+    private RefreshToken createRefreshToken(Human human){
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRefreshToken(UUID.randomUUID().toString());
+        refreshToken.setExpireDate(new Date(System.currentTimeMillis()+1000*60*60*4));
+        refreshToken.setHuman(human);
+
+        return refreshToken;
+    }
+
 
     @Override
     public DtoHuman register(AuthRequest request) {
@@ -77,18 +94,17 @@ public class AuthServiceImpl implements IAuthService {
 
                    Optional<Human> optionalHuman = humanRepository.findByUsername(request.getUsername());
 
-
-                        Human human = optionalHuman.get();
+                   Human human = optionalHuman.get();
             boolean isPasswordMatch = passwordEncoder.matches(request.getPassword(), human.getPassword());
             if (!isPasswordMatch) {
                 throw new RuntimeException("Username or Password is incorrect");
             }
 
+            String accessToken =  jwtService.generateToken(human);
 
-            String token =  jwtService.generateToken(human);
-
-
-            return new AuthResponse(token);
+                    RefreshToken refreshToken = createRefreshToken(optionalHuman.get());
+                    refreshTokenRepository.save(refreshToken);
+            return new AuthResponse(accessToken,refreshToken.getRefreshToken());
 
         } catch (Exception e) {
             throw new RuntimeException("Username or Password is wrong: " + e.getMessage());
